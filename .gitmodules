@@ -1,0 +1,3 @@
+[submodule "modules/neo4j"]
+	path = modules/neo4j
+	url = git@github.com:dpnl87/puppet-neo4j.git
