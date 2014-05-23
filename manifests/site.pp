@@ -13,14 +13,6 @@ file { '/etc/localtime':
   require => Package['tzdata'],
 }
 
-#yumrepo { 'neo4j':
-#  name     => 'neo4j',
-#  baseurl  => 'http://yum.neo4j.org',
-#  enabled  => 1,
-#  gpgcheck => 1,
-#  gpgkey   => 'http://debian.neo4j.org/neotechnology.gpg.key',
-#}
-
 class { 'neo4j':
   package_name      => 'neo4j-2.1.0-RC1_1.noarch',
   install_from_file => true,
