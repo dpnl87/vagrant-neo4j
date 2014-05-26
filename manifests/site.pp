@@ -1,5 +1,6 @@
-resources { 'firewall':
-  purge => true
+service { 'iptables':
+  ensure => stopped,
+  enable => false,
 }
 
 package { ['tzdata', 'ntp', 'ntpdate']:
@@ -18,12 +19,29 @@ file { '/etc/localtime':
 }
 
 class { 'neo4j':
-  package_name      => 'neo4j-2.1.0-RC1_1.noarch',
+  package_name => 'neo4j-2.1.0-RC1_1.noarch',
 }
 
 class { 'apache':
   default_mods        => false,
   default_confd_files => false,
+  purge_configs       => true,
   server_signature    => 'Off',
   server_tokens       => 'Prod',
+}
+
+file { ['/var/www/dashboard', '/var/www/dashboard/app']:
+  ensure  => directory,
+  require => Class['apache'],
+}
+
+apache::vhost { 'dashboard':
+  port          => '80',
+  serveraliases => 'localhost',
+  docroot       => '/var/www/dashboard/app',
+  proxy_pass    => [{
+    'path'   => '/neo4j',
+    'url'    => 'http://localhost:7474/db/data'
+  }],
+  require       => File['/var/www/dashboard/app'],
 }
