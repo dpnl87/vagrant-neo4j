@@ -1,3 +1,7 @@
+resources { 'firewall':
+  purge => true
+}
+
 package { ['tzdata', 'ntp', 'ntpdate']:
   ensure => installed,
 }
@@ -15,6 +19,11 @@ file { '/etc/localtime':
 
 class { 'neo4j':
   package_name      => 'neo4j-2.1.0-RC1_1.noarch',
-  install_from_file => true,
 }
 
+class { 'apache':
+  default_mods        => false,
+  default_confd_files => false,
+  server_signature    => 'Off',
+  server_tokens       => 'Prod',
+}
