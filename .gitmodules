@@ -1,6 +1,6 @@
 [submodule "modules/neo4j"]
 	path = modules/neo4j
-	url = git@github.com:dpnl87/puppet-neo4j.git
+	url = https://github.com/dpnl87/puppet-neo4j.git
 [submodule "modules/apache"]
 	path = modules/apache
 	url = https://github.com/puppetlabs/puppetlabs-apache.git
