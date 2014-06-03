@@ -42,13 +42,19 @@ file { ['/var/www/dashboard', '/var/www/dashboard/app']:
   require => Class['apache'],
 }
 
+class { 'apache::mod::dir': }
+
 apache::vhost { 'dashboard':
-  port          => '80',
-  serveraliases => 'localhost',
-  docroot       => '/var/www/dashboard/app',
-  proxy_pass    => [{
+  port           => '80',
+  serveraliases  => 'localhost',
+  docroot        => '/var/www/dashboard/app',
+  directoryindex => 'index.html',
+  proxy_pass     => [{
     'path'   => '/neo4j',
     'url'    => 'http://localhost:7474/db/data'
   }],
-  require       => File['/var/www/dashboard/app'],
+  require        => [
+    File['/var/www/dashboard/app'],
+    Class['apache::mod::dir']
+  ]
 }
