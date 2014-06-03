@@ -22,6 +22,12 @@ class { 'neo4j':
   package_name => 'neo4j-2.1.0-RC1_1.noarch',
 }
 
+file { '/etc/profile.d/neo4j.sh':
+  ensure  => present,
+  content => 'export PATH=/usr/share/neo4j/bin/:$PATH',
+  require => Class['neo4j'],
+}
+
 class { 'apache':
   default_mods        => false,
   default_confd_files => false,
