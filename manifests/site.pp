@@ -34,6 +34,7 @@ class { 'apache':
   purge_configs       => true,
   server_signature    => 'Off',
   server_tokens       => 'Prod',
+  sendfile            => 'Off',
 }
 
 file { ['/var/www/dashboard', '/var/www/dashboard/app']:
